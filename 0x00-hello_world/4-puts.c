@@ -1,8 +1,7 @@
 #include <stdio.h>
 /**
  * main - Entry point
- * A program that prints a string with puts function
- * Return: 0(meaning the project is successful
+ * Return: 0(meaning the project is successful)
 */
 int main(void)
 (
