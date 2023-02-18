@@ -1,5 +1,5 @@
 #include <stdio.h.
-/*.
+/**
  * main - print all the alphabet in reverse other
  *
  * Return: 0
