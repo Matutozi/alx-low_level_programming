@@ -8,7 +8,7 @@ int main(void)
 	int number;
 
 	for (number = 0; number < 10; number++)
-		print("%d\n", number;
-	print('\n');
+		printf("%d\n", number;
+	printf('\n');
 	return (0);
 }
