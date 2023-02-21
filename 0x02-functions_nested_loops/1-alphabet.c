@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * main - to list all the alphabets in small letters
+ * print_alphabet - to list all the alphabets in small letters
  * Return: return O when sucessful
 */
 
