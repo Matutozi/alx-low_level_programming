@@ -1,0 +1,24 @@
+#include "main.h"
+/**
+ * jack_bauer - print every minute of the day oof jack bauer
+*/
+void jack_bauer(void)
+{
+	int x, y;
+
+	while (x < 24)
+	{
+		y = 0;
+		while (y < 60)
+		{
+			_putchar((x / 10) + '0');
+			_putchar((x % 10) + '0');
+			_putchar(':');
+			_putchar((y / 10) + '0');
+			_putchar((y % 10) + '0');
+			_putchar('\n');
+			y++;
+		}
+		x++;
+	}
+}
