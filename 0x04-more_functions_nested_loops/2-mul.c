@@ -1,15 +1,15 @@
 #include "main.h"
-
-/* mul - to multiply two digits together
- * @a: parameter to use
- * @b: parameter to use
- * Return: return 0 when sucessful
-*/
-
+/**
+ * mul - checks for checks for a digit (0 through 9).
+ * @a: a - Variable
+ * @b: b - variable
+ * Return: Always 0.
+ */
 int mul(int a, int b)
 {
-	int cal;
+ int mul;
 
-	cal = a * b;
-	return (cal);
+ mul = a * b;
+
+ return (mul);
 }
