@@ -3,7 +3,7 @@
 /**
  * print_rev - function to print a string in reverse
  *
- * @c: parameter to consider
+ * @s: parameter to consider
  *
  * Return: nothing
 */
@@ -18,6 +18,7 @@ void print_rev(char *s)
 		counter++;
 		s++;
 	}
+	s--;
 
 	for (reverse = counter; reverse > 0; reverse--)
 	{
