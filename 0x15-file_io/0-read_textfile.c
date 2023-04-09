@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * read_textfile - function tgat reada a text file and prints it to POSIX standard output
+ * read_textfile - function tgat reada a text file and prints it to std output
  * @filename: path to file
  * @letters: number of characterd to print
  * Return: returns the number of letters it should read and print
@@ -21,7 +21,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	string = malloc(sizeof(char) * letters);
 	if (string == NULL)
 		return (0);
-	fp2 = read(fp1,string,letters);
+	fp2 = read(fp1, string, letters);
 	if (fp2 == -1)
 	{
 		return (0);
