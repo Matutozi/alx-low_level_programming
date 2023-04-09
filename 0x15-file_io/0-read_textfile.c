@@ -16,19 +16,19 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	if (filename == NULL)
 		return (0);
 	fp1 = open(filename, O_RDONLY);
-	if (!fp1 == -1)
+	if (fp1 == -1)
 		return (0);
 	string = malloc(sizeof(char) * letters);
 	if (string == NULL)
 		return (0);
 	fp2 = read(fp1,string,letters);
-	if (fp2 = -1)
+	if (fp2 == -1)
 	{
 		return (0);
 		free(string);
 	}
 	fp3 = write(STDOUT_FILENO, string, fp2);
-	if (fp2 == -1 || fp2 != fp3)
+	if (fp3 == -1 || fp2 != fp3)
 	{
 		free(string);
 		return (0);
