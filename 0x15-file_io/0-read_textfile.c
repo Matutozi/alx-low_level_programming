@@ -1,43 +1,50 @@
 #include "main.h"
 
 /**
- * read_textfile - function tgat reada a text file and prints it to std output
+ * read_textfile - Reads a text file and prints it to the
+ *			POSIX standard output.
  * @filename: path to file
- * @letters: number of characterd to print
- * Return: returns the number of letters it should read and print
+ * @letters: Number of characters to print
  *
-*/
+ * Return: The number of letters it should read and print
+ */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fp1, fp2, fp3, fp4;
-	char *string;
+	int fp;
+	ssize_t fp1, fp2, fp3;
+	char *str;
 
-	if (filename == NULL)
+	if (!filename)
 		return (0);
-	fp1 = open(filename, O_RDONLY);
+
+	fp = open(filename, O_RDONLY);
+	if (fp == -1)
+		return (0);
+
+	str = malloc(sizeof(char) * letters);
+	if (!str)
+		return (0);
+
+	fp1 = read(fp, str, letters);
 	if (fp1 == -1)
-		return (0);
-	string = malloc(sizeof(char) * letters);
-	if (string == NULL)
-		return (0);
-	fp2 = read(fp1, string, letters);
-	if (fp2 == -1)
 	{
-		return (0);
-		free(string);
-	}
-	fp3 = write(STDOUT_FILENO, string, fp2);
-	if (fp3 == -1 || fp2 != fp3)
-	{
-		free(string);
+		free(str);
 		return (0);
 	}
-	fp4 = close(fp1);
-	if (fp4 == -1)
+
+	fp2 = write(STDOUT_FILENO, str, fp1);
+	if (fp2 == -1 || fp1 != fp2)
 	{
-		free(fp4);
+		free(str);
 		return (0);
 	}
-	free(string);
-	return (fp3);
+
+	fp3 = close(fp);
+	if (fp3 == -1)
+	{
+		free(str);
+		return (0);
+	}
+	free(str);
+	return (fp2);
 }
