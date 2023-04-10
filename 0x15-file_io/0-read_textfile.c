@@ -25,14 +25,14 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	if (!string)
 		return (0);
 
-	fp1 = read(fp, str, letters);
+	fp1 = read(fp, string, letters);
 	if (fp1 == -1)
 	{
 		free(string);
 		return (0);
 	}
 
-	fp2 = write(STDOUT_FILENO, str, fp1);
+	fp2 = write(STDOUT_FILENO, string, fp1);
 	if (fp2 == -1 || fp1 != fp2)
 	{
 		free(string);
