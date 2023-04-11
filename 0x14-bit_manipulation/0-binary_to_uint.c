@@ -8,17 +8,18 @@
  *
 */
 
-unsigned int binary_to_uint(const char *b)
+unsigned int binary_to_uint(const char *b)
 {
 	unsigned int number;
 	int i, j;
 
-	if(!b)
+	if (!b)
 	{
 		return (0);
 	}
 	int i = 0;
 	int number = 0;
+
 	while (b[i])
 	{
 		j = b[i] - 48;
