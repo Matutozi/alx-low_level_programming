@@ -28,18 +28,8 @@ void print_binary(unsigned long int n)
 
 	while (i > 0)
 	{
-		current = 1  << (i - 1);
-		if ((n & current) != 0)
-		{
-			bit_v = 1;
-		}
-		else
-		{
-			bit_v = 0;
-		}
-
-		_putchar(bit_v + '0');
-
+		num = n >> (i - 1);
+		_putchar((num & 1) + '0');
 		i--;
 	}
 }
