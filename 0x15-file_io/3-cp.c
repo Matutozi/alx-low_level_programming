@@ -1,67 +1,102 @@
-$include "main.h"
+#include "main.h"
 
+#define BUFFER_SIZE 1024
 /**
- * main - function that copies the content of one file to another
- * @argc: parameter that stores the argument count
- * @argv: parameer that stores the arguments vector
- * Return: returns 1 on success, exit otherwise
- */
+ * print_error - function that ouptput error message
+ * @message: first parameter
+ * @filename: 2nd parameter
+ * @code: thord parametr
+ *
+ * Return: void
+*/
 
-int main(int argc, char *argv[])
+void print_error(char *message, char *filename, int code)
 {
-	int src, dest, n_read = 1024, wrote, close_src, close_dest;
-	unsigned int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
-	char buffer[1024];
-
+	dprintf(STDERR_FILENO, message, filename);
+	exit(code);
+}
+/**
+ * check_arguments - function that checks the argument
+ * @argc: param 1
+ * @argv: paametr 2
+ * Return: void
+ *
+*/
+void check_arguments(int argc, char *argv[])
+{
 	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "%s", "Usage: cp file_from file_to\n");
-		exit(97);
+		print_error("Usage: cp file_from file_to\n", NULL, 97);
 	}
-	src = open(argv[1], O_RDONLY);
-	check_IO_stat(src, -1, argv[1], 'O');
-	dest = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, mode);
-	check_IO_stat(dest, -1, argv[2], 'W');
-	while (n_read == 1024)
-	{
-		n_read = read(src, buffer, sizeof(buffer));
-		if (n_read == -1)
-			check_IO_stat(-1, -1, argv[1], 'O');
-		wrote = write(dest, buffer, n_read);
-		if (wrote == -1)
-			check_IO_stat(-1, -1, argv[2], 'W');
-	}
-	close_src = close(src);
-	check_IO_stat(close_src, src, NULL, 'C');
-	close_dest = close(dest);
-	check_IO_stat(close_dest, dest, NULL, 'C');
-	return (0);
 }
 
 /**
- * check_IO_stat - function tht checks if a file can be opened or closed
- * @stat: paraeter that stores file descriptor
- * @filename: parameter that stores name of the file
- * @mode: parameter thatcontrols the closing or opening
- * @fd: parameter that stores the file descriptor
- * Return: void
- */
+ * open_source_file - function that 
+ * @filename: parameter
+ * Return: return int
+*/
 
-void check_IO_stat(int stat, int fd, char *filename, char mode)
+int open_source_file(char *filename)
 {
-	if (mode == 'C' && stat == -1)
+	int fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
+		print_error("Error: Can't read from file %s\n", filename, 98);
 	}
-	else if (mode == 'O' && stat == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
-		exit(98);
-	}
-	else if (mode == 'W' && stat == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
-		exit(99);
-	}
+	return fd;
 }
+
+/**
+ * open_destination - function that opens destin
+ * @filename: parameter
+ * Return: returns int
+*/
+int open_destination_file(char *filename)
+{
+	int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		print_error("Error: Can't write to file %s\n", filename, 99);
+	}
+	return fd;
+}
+/**
+ * copy_file_content - function that copies the content
+ * @fd_from: paraeter
+ * @fd_to: param
+ * Return: void
+*/
+void copy_file_content(int fd_from, int fd_to)
+{
+	char buffer[BUFFER_SIZE];
+	ssize_t num_read, num_written;
+
+    while ((num_read = read(fd_from, buffer, BUFFER_SIZE)) > 0) {
+        num_written = write(fd_to, buffer, num_read);
+        if (num_written != num_read) {
+            print_error("Error: Can't write to file %s\n", argv[2], 99);
+        }
+    }
+
+    if (num_read == -1) {
+        print_error("Error: Can't read from file %s\n", argv[1], 98);
+    }
+}
+
+void close_file(int fd, char *filename) {
+    if (close(fd) == -1) {
+        dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+        exit(100);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    check_arguments(argc, argv);
+    int fd_from = open_source_file(argv[1]);
+    int fd_to = open_destination_file(argv[2]);
+    copy_file_content(fd_from, fd_to);
+    close_file(fd_from, argv[1]);
+    close_file(fd_to, argv[2]);
+    return 0;
+}
+
