@@ -1,11 +1,10 @@
 $include "main.h"
 
 /**
- * main - copies the content of one file to another
- * @argc: argument count
- * @argv: arguments passed
- *
- * Return: 1 on success, exit otherwise
+ * main - function that copies the content of one file to another
+ * @argc: parameter that stores the argument count
+ * @argv: parameer that stores the arguments vector
+ * Return: returns 1 on success, exit otherwise
  */
 
 int main(int argc, char *argv[])
@@ -40,14 +39,14 @@ int main(int argc, char *argv[])
 }
 
 /**
- * check_IO_stat - checks if a file can be opened or closed
- * @stat: file descriptor of the file to be opened
- * @filename: name of the file
- * @mode: closing or opening
- * @fd: file descriptor
- *
+ * check_IO_stat - function tht checks if a file can be opened or closed
+ * @stat: paraeter that stores file descriptor
+ * @filename: parameter that stores name of the file
+ * @mode: parameter thatcontrols the closing or opening
+ * @fd: parameter that stores the file descriptor
  * Return: void
  */
+
 void check_IO_stat(int stat, int fd, char *filename, char mode)
 {
 	if (mode == 'C' && stat == -1)
