@@ -26,5 +26,6 @@ void print_osabi(unsigned char *e_ident);
 void print_type(unsigned int e_type, unsigned char *e_ident);
 void print_entry(unsigned long int e_entry, unsigned char *e_ident);
 void close_elf(int elf);
+void check_IO_stat(int stat, int fd, char *filename, char mode);
 
 #endif /* MAIN_H */
