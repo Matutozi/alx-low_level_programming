@@ -10,14 +10,14 @@
 
 int binary_search(int *array, size_t size, int value)
 {
-	size_t i, l_index r_index;
+	size_t i, l_index, r_index;
 	int mid;
 
 	if (array == NULL)
 		return (-1);
 
 	l_index = 0;
-	r_index = 0, size - 1;
+	r_index = size - 1;
 
 	while (l_index <= r_index)
 	{
